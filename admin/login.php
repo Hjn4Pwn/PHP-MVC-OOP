@@ -1,5 +1,5 @@
 <?php
-include_once "../classes/adminLogin.php";
+include "../classes/adminLogin.php";
 ?>
 
 <?php
@@ -7,8 +7,8 @@ include_once "../classes/adminLogin.php";
 $adminLogin_Obj = new adminLogin();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-	$adminUsername = $_POST["$adminUsername"];
-	$adminPassword = $_POST["$adminPassword"];
+	$adminUsername = $_POST["adminUsername"];
+	$adminPassword = hash('sha256', $_POST["adminPassword"]);
 
 	$loginCheck = $adminLogin_Obj->admin_login($adminUsername, $adminPassword);
 }
@@ -27,11 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		<section id="content">
 			<form action="login.php" method="post">
 				<h1>Admin Login</h1>
-				<div>
-					<input type="text" placeholder="Username" required="" name="adminUsername" />
+				<div style="color:red; padding-bottom: 12px;">
+					<?php
+					if (isset($loginCheck)) {
+						echo $loginCheck;
+					}
+					?>
 				</div>
 				<div>
-					<input type="password" placeholder="Password" required="" name="adminPassword" />
+					<!-- required="" -->
+					<input type="text" placeholder="Username" name="adminUsername" />
+				</div>
+				<div>
+					<input type="password" placeholder="Password" name="adminPassword" />
 				</div>
 				<div>
 					<input type="submit" value="Log in" />

@@ -26,10 +26,24 @@ class adminLogin
         $adminPassword = mysqli_real_escape_string($this->db->conn, $adminPassword);
 
         if (empty($adminUsername) ||  empty($adminPassword)) {
-            $alert = "User and Pass must be not empty";
+            $alert = "Username and Password must be not empty";
             return $alert;
         } else {
-            $query = "SELECT * FROM tbl_admin WHERE adminUsername = ? AND adminPassword = ?";
+            // đừng quên hash
+            $query = "SELECT * FROM tbl_admin  WHERE adminUsername = '$adminUsername' AND adminPassword = '$adminPassword'";
+            $result = $this->db->select($query);
+            if ($result) {
+                $value = $result->fetch_assoc();
+                session_start(); //
+                Session::set('adminLogin', true);
+                Session::set('adminId', $value['adminId']);
+                Session::set('adminUsername', $value['adminUsername']);
+                Session::set('adminName', $value['adminName']);
+                Session::checkLogin();
+            } else {
+                $alert = "Username or Password is incorrect";
+                return $alert;
+            }
         }
     }
 }

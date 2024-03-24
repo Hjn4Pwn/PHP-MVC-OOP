@@ -404,7 +404,6 @@ input.error
 	margin: 8px 0 0 0;
 	padding: 0;
 	height: 1%;
-	
 	color: #FF0000;
 }
 
@@ -413,9 +412,9 @@ span.success
 	margin: 8px 0 0 0;
 	padding: 0;
 	height: 1%;
-	
 	color: #7b912b;
 }
+
 
 label.error
 {
@@ -546,7 +545,7 @@ label.error
 	  -webkit-border-radius: 4px; /* Safari, Chrome */
 	  border-radius: 4px; /* CSS3 */
 	  line-height:1.1em;
-	  padding:4px 12px; 
+	  padding: 4px 12px; 
 	  margin-bottom:10px;
 	  margin-top:4px;
 	  }
@@ -560,7 +559,7 @@ label.error
   background: -webkit-linear-gradient(top, #a072c7, #47196e); 
   background:    -moz-linear-gradient(top, #a072c7, #47196e); 
   background:     -ms-linear-gradient(top, #a072c7, #47196e); 
-  backgroun:      -o-linear-gradient(top, #a072c7, #47196e); 
+  background:      -o-linear-gradient(top, #a072c7, #47196e); 
   background:         linear-gradient(top, #a072c7, #47196e);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#a072c7', EndColorStr='#47196e'); 
 

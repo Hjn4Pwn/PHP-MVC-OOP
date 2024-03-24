@@ -1,8 +1,15 @@
 <?php
 
 /**
- *Session Class
+ *Session Class 
  **/
+
+/**
+ * 0 ----> PHP_SESSION_DISABLED if sessions are disabled.
+ * 1 ----> PHP_SESSION_NONE if sessions are enabled, but none exists.
+ * 2 ----> PHP_SESSION_ACTIVE if sessions are enabled, and one exists.
+ */
+
 class Session
 {
     public static function init()
@@ -35,7 +42,7 @@ class Session
     public static function checkSession()
     {
         self::init();
-        if (self::get("login") == false) {
+        if (self::get("adminLogin") == false) {
             self::destroy();
             header("Location:login.php");
         }
@@ -44,7 +51,7 @@ class Session
     public static function checkLogin()
     {
         self::init();
-        if (self::get("login") == true) {
+        if (self::get("adminLogin")) {
             header("Location:index.php");
         }
     }
