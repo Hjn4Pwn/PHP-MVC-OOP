@@ -10,12 +10,15 @@ class Format
         return date('F j, Y, g:i a', strtotime($date));
     }
 
-    public function textShorten($text, $limit = 400)
+    public function textShorten($text, $limit = 200)
     {
+        if (strlen($text) <= $limit) {
+            return $text;
+        }
         $text = $text . " ";
         $text = substr($text, 0, $limit);
-        $text = substr($text, 0, strrpos($text, ' '));
-        $text = $text . ".....";
+        $text = substr($text, 0, strrpos($text, ' ')); // đẩm bảo không cắt giữa 1 từ
+        $text = $text . " ...";
         return $text;
     }
 

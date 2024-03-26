@@ -26,8 +26,12 @@ class category
             $alert = "<span class='error'>Category name must be not empty</span>";
             return $alert;
         } else {
-            $query = "INSERT INTO tbl_category (catName) VALUES ('$catName') ";
-            $result = $this->db->insert($query);
+            $query = "INSERT INTO tbl_category (catName) VALUES (?) ";
+            $params = array($catName);
+            $types = 's';
+
+            $result = $this->db->executeQuery($query, $params, $types);
+
             if ($result) {
                 $alert = "<span class='success'>Insert Category Successfully</span>";
                 return $alert;
@@ -41,7 +45,7 @@ class category
     public function show_category()
     {
         $query = "SELECT * FROM tbl_category ORDER BY catId DESC";
-        $result = $this->db->select($query);
+        $result = $this->db->executeSelect($query, array());
         return $result;
     }
 
@@ -58,8 +62,12 @@ class category
             $alert = "<span class='error'>Category name must be not empty</span>";
             return $alert;
         } else {
-            $query = "UPDATE tbl_category SET catName='$catName' WHERE catId='$catId' ";
-            $result = $this->db->update($query);
+            $query = "UPDATE tbl_category SET catName = ? WHERE catId = ? ";
+            $params = array($catName, $catId);
+            $types = 'si';
+
+            $result = $this->db->executeQuery($query, $params, $types);
+
             if ($result) {
                 $alert = "<span class='success'>Update Category Successfully</span>";
                 return $alert;
@@ -72,15 +80,19 @@ class category
 
     public function getCatbyId($id)
     {
-        $query = "SELECT * FROM tbl_category WHERE catId='$id'";
-        $result = $this->db->select($query);
+        $query = "SELECT * FROM tbl_category WHERE catId = ? ";
+        $params = array($id);
+        $types = 'i';
+        $result = $this->db->executeSelect($query, $params, $types);
         return $result;
     }
 
     public function delete_category($id)
     {
-        $query = "DELETE FROM tbl_category WHERE catId='$id'";
-        $result = $this->db->delete($query);
+        $query = "DELETE FROM tbl_category WHERE catId =?";
+        $params = array($id);
+        $types = 'i';
+        $result = $this->db->executeQuery($query, $params, $types);
         return $result;
     }
 }

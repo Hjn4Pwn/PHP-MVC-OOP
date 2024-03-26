@@ -27,10 +27,10 @@ if (isset($_GET['deleteCatId']) && $_GET['deleteCatId'] != NULL) {
 				<tbody>
 
 					<?php
-					$show_cat = $cat->show_category();
-					if ($show_cat) {
+					$showCat = $cat->show_category();
+					if ($showCat) {
 						$i = 0;
-						while ($result = $show_cat->fetch_assoc()) {
+						while ($result = $showCat->fetch_assoc()) {
 							$i++;
 					?>
 							<tr class="odd gradeX">

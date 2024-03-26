@@ -7,77 +7,57 @@ class Database
 {
     public $host   = DB_HOST;
     public $user   = DB_USER;
-    public $pass   = DB_PASS;
+    public $password   = DB_PASS;
     public $dbname = DB_NAME;
 
-
     public $conn;
-    public $error;
 
     public function __construct()
     {
-        $this->connectDB();
-    }
-
-    private function connectDB()
-    {
-        $this->conn = new mysqli(
-            $this->host,
-            $this->user,
-            $this->pass,
-            $this->dbname
-        );
-        if (!$this->conn) {
-            $this->error = "Connection fail" . $this->conn->connect_error;
-            return false;
+        $this->conn = new mysqli($this->host, $this->user, $this->password, $this->dbname);
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
         }
     }
 
-    // Select or Read data
-    public function select($query)
+    // support: UPDATE, DELETE, INSERT
+    public function executeQuery($query, $params, $types = '')
     {
-        $result = $this->conn->query($query) or
-            die($this->conn->error . __LINE__);
+        $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            die("Query preparation failed: " . $this->conn->error);
+        }
+
+        if (!empty($params)) {
+            if (empty($types)) {
+                $types = str_repeat('s', count($params));
+            }
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+
+        if ($stmt->errno) {
+            die("Query execution failed: " . $stmt->error);
+        }
+
+        return $stmt;
+    }
+
+    // support: SELECT 
+    public function executeSelect($query, $params, $types = '')
+    {
+        $stmt = $this->executeQuery($query, $params, $types);
+        $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             return $result;
-        } else {
-            return false;
         }
+        return false;
     }
 
-    // Insert data
-    public function insert($query)
+    public function closeConnection()
     {
-        $insert_row = $this->conn->query($query) or
-            die($this->conn->error . __LINE__);
-        if ($insert_row) {
-            return $insert_row;
-        } else {
-            return false;
-        }
-    }
-
-    // Update data
-    public function update($query)
-    {
-        $update_row = $this->conn->query($query) or
-            die($this->conn->error . __LINE__);
-        if ($update_row) {
-            return $update_row;
-        } else {
-            return false;
-        }
-    }
-
-    // Delete data
-    public function delete($query)
-    {
-        $delete_row = $this->conn->query($query) or
-            die($this->conn->error . __LINE__);
-        if ($delete_row) {
-            return $delete_row;
-        } else {
-            return false;
-        }
+        $this->conn->close();
     }
 }

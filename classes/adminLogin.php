@@ -30,8 +30,13 @@ class adminLogin
             return $alert;
         } else {
             // đừng quên hash
-            $query = "SELECT * FROM tbl_admin  WHERE adminUsername = '$adminUsername' AND adminPassword = '$adminPassword'";
-            $result = $this->db->select($query);
+            $query = "SELECT * FROM tbl_admin  WHERE adminUsername = ? AND adminPassword = ?";
+
+            $params = array($adminUsername, $adminPassword);
+            $types = 'ss';
+
+            $result = $this->db->executeSelect($query, $params, $types);
+
             if ($result) {
                 $value = $result->fetch_assoc();
                 session_start(); //

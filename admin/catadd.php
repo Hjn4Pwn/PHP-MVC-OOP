@@ -5,7 +5,6 @@ include '../classes/category.php';
 ?>
 
 <?php
-// CHECK LOGIN ADMIN
 $cat = new category();
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {

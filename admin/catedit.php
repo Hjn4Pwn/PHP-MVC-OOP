@@ -5,7 +5,6 @@ include '../classes/category.php';
 ?>
 
 <?php
-// CHECK LOGIN ADMIN
 $cat = new category();
 
 if (!isset($_GET['catId']) || $_GET['catId'] == NULL) {
