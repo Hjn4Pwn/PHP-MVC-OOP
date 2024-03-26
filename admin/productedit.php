@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
                 ?>
                 <table class="form">
                     <?php
-                    $getProductName = $product->getProductbyId($id);
-                    if ($getProductName) {
-                        $result = $getProductName->fetch_assoc();
+                    $getProduct = $product->getProductbyId($id);
+                    if ($getProduct) {
+                        $result = $getProduct->fetch_assoc();
                     ?>
                         <tr>
                             <td>

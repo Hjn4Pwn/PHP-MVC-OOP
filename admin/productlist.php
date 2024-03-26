@@ -10,6 +10,19 @@ $product = new product();
 
 if (isset($_GET['deleteProductId']) && $_GET['deleteProductId'] != NULL) {
 	$deleteProductId = $_GET['deleteProductId'];
+
+	// Thực hiện xóa ảnh lưu trong thư mục uploads trên server
+	$getProduct = $product->getProductbyId($deleteProductId);
+	if ($getProduct) {
+		$productImage = $getProduct->fetch_assoc()['productImage'];
+		echo $productImage;
+		$imagePath = './uploads/' . $productImage;
+		if (file_exists($imagePath)) {
+			unlink($imagePath);
+		}
+	}
+	//
+
 	$deleteProduct = $product->delete_product($deleteProductId);
 }
 ?>
