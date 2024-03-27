@@ -16,7 +16,7 @@ if (!isset($_GET['productId']) || $_GET['productId'] == NULL) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
-    $updateProduct = $product->update_product_($_POST, $_FILES, $id);
+    $updateProduct = $product->update_product($_POST, $_FILES, $id);
 }
 ?>
 
@@ -149,7 +149,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
                 </table>
             <?php
                     } else {
-                        echo "<script>window.location='productlist.php';</script>"; // id none exist
+                        //echo "<script>window.location='catlist.php';</script>"; // id none exist
+                        echo "<script>window.location='../notfound/404.html';</script>";
                     }
             ?>
             </form>

@@ -53,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                 <?php
                 } else {
-                    echo "<script>window.location='brandlist.php';</script>"; // id none exist
+                    //echo "<script>window.location='brandlist.php';</script>"; // id none exist
+                    echo "<script>window.location='../notfound/404.html';</script>";
                 }
                 ?>
             </form>

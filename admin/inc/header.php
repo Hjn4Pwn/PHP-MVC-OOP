@@ -1,5 +1,6 @@
 <?php
-include_once "../lib/session.php";
+// mốc là file index
+include_once $_SERVER['DOCUMENT_ROOT'] . "/web_php/shop/" . "lib/session.php";
 Session::checkSession();
 ?>
 

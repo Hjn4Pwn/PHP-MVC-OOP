@@ -1,6 +1,6 @@
 <?php
-include "./include/header.php";
-include "./include/slider.php";
+include "./inc/header.php";
+include "./inc/slider.php";
 ?>
 
 <div class="main">
@@ -77,5 +77,5 @@ include "./include/slider.php";
 	</div>
 </div>
 <?php
-include "./include/footer.php";
+include "./inc/footer.php";
 ?>

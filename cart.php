@@ -1,8 +1,23 @@
 <?php
-include "./include/header.php";
-include "./include/slider.php";
+include "./inc/header.php";
+// include "./inc/slider.php";
 ?>
 
+<?php
+if (isset($_GET['deleteCartId']) && $_GET['deleteCartId'] != NULL) {
+	$deleteCartId = $_GET['deleteCartId'];
+	$deleteCartId = $cart->deleteProductCart($deleteCartId);
+}
+?>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
+	$cartIdUpdate = $_POST['cartIdUpdate'];
+	$cartQuantity = $_POST['cartQuantity'];
+	$updateQuantity = $cart->updateQuantity($cartIdUpdate, $cartQuantity);
+}
+
+?>
 
 <div class="main">
 	<div class="content">
@@ -18,88 +33,60 @@ include "./include/slider.php";
 						<th width="20%">Total Price</th>
 						<th width="10%">Action</th>
 					</tr>
-					<tr>
-						<td>Product Title</td>
-						<td><img src="images/new-pic3.jpg" alt="" /></td>
-						<td>Tk. 20000</td>
-						<td>
-							<form action="" method="post">
-								<input type="number" name="" value="1" />
-								<input type="submit" name="submit" value="Update" />
-							</form>
-						</td>
-						<td>Tk. 40000</td>
-						<td><a href="">X</a></td>
-					</tr>
+					<?php
+					$getProductCart = $cart->getProductCart();
+					if ($getProductCart) {
+						$total = 0;
+						while ($res = $getProductCart->fetch_assoc()) {
+					?>
+							<tr>
+								<td><?php echo $res['cartProductName'] ?></td>
+								<td><img src="admin/uploads/<?php echo $res['cartProductImage'] ?>" alt="" /></td>
+								<td><?php echo $res['cartPrice'] . " VND" ?></td>
+								<td>
+									<form action="" method="post">
+										<input type="hidden" name="cartIdUpdate" value="<?php echo $res['cartId'] ?>" />
+										<input type="number" name="cartQuantity" value="<?php echo $res['cartQuantity'] ?>" min="0" />
+										<input type="submit" name="submit" value="Update" />
+									</form>
+								</td>
+								<td><?php $totalPerProduct = $res['cartPrice'] * $res['cartQuantity'];
+									$total += $totalPerProduct;
+									echo $totalPerProduct . " VND"; ?></td>
+								<td><a onclick="confirmDelete(<?php echo $res['cartId'] ?>)" href="#">Delete</a></td>
+								<!-- delete product in cart -->
+								<script>
+									function confirmDelete(deleteCartId) {
+										var confirmDelete = confirm("Are you serious?");
+										if (confirmDelete) {
+											// Nếu người dùng nhấp vào OK, thực hiện hành động xóa
+											window.location.href = "?deleteCartId=" + deleteCartId;
+										} else {
+											//    
+										}
+									}
+								</script>
+							</tr>
+					<?php
+						}
+					}
+					?>
 
-					<tr>
-						<td>Product Title</td>
-						<td><img src="images/new-pic3.jpg" alt="" /></td>
-						<td>Tk. 20000</td>
-						<td>
-							<form action="" method="post">
-								<input type="number" name="" value="1" />
-								<input type="submit" name="submit" value="Update" />
-							</form>
-						</td>
-						<td>Tk. 40000</td>
-						<td><a href="">X</a></td>
-					</tr>
-
-					<tr>
-						<td>Product Title</td>
-						<td><img src="images/new-pic3.jpg" alt="" /></td>
-						<td>Tk. 20000</td>
-						<td>
-							<form action="" method="post">
-								<input type="number" name="" value="1" />
-								<input type="submit" name="submit" value="Update" />
-							</form>
-						</td>
-						<td>Tk. 40000</td>
-						<td><a href="">X</a></td>
-					</tr>
-					<tr>
-						<td>Product Title</td>
-						<td><img src="images/new-pic3.jpg" alt="" /></td>
-						<td>Tk. 20000</td>
-						<td>
-							<form action="" method="post">
-								<input type="number" name="" value="1" />
-								<input type="submit" name="submit" value="Update" />
-							</form>
-						</td>
-						<td>Tk. 40000</td>
-						<td><a href="">X</a></td>
-					</tr>
-
-					<tr>
-						<td>Product Title</td>
-						<td><img src="images/new-pic3.jpg" alt="" /></td>
-						<td>Tk. 20000</td>
-						<td>
-							<form action="" method="post">
-								<input type="number" name="" value="1" />
-								<input type="submit" name="submit" value="Update" />
-							</form>
-						</td>
-						<td>Tk. 40000</td>
-						<td><a href="">X</a></td>
-					</tr>
 
 				</table>
 				<table style="float:right;text-align:left;" width="40%">
 					<tr>
 						<th>Sub Total : </th>
-						<td>TK. 210000</td>
+						<td><?php echo ($getProductCart) ? $total . " VND" : "0 VND"; ?></td>
 					</tr>
 					<tr>
 						<th>VAT : </th>
-						<td>TK. 31500</td>
+						<!-- 0.05% -->
+						<td><?php echo ($getProductCart) ? $total * 0.005 . " VND" : "0 VND"; ?></td>
 					</tr>
 					<tr>
 						<th>Grand Total :</th>
-						<td>TK. 241500 </td>
+						<td><?php echo ($getProductCart) ? $total * 1.005 . " VND" : "0 VND"; ?></td>
 					</tr>
 				</table>
 			</div>
@@ -116,5 +103,5 @@ include "./include/slider.php";
 	</div>
 </div>
 <?php
-include "./include/footer.php";
+include "./inc/footer.php";
 ?>

@@ -1,7 +1,7 @@
 <?php
-// include_once "../lib/session.php";
-include_once "../lib/database.php";
-include_once "../helpers/format.php";
+// include_once $_SERVER['DOCUMENT_ROOT'] . "/web_php/shop/" . "lib/session.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/web_php/shop/" . "lib/database.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/web_php/shop/" . "helpers/format.php";
 
 ?>
 
@@ -70,37 +70,8 @@ class product
         return $result;
     }
 
-    public function update_product($productName, $productId)
-    {
-        $productName = $this->fm->validation($productName);
-        $productId = $this->fm->validation($productId);
 
-        $productName = mysqli_real_escape_string($this->db->conn, $productName);
-        $productId = mysqli_real_escape_string($this->db->conn, $productId);
-
-
-        if (empty($productName)) {
-            $alert = "<span class='error'>Product name must be not empty</span>";
-            return $alert;
-        } else {
-            $query = "UPDATE tbl_product SET productName=? WHERE productId=? ";
-            $params = array($productName, $productId);
-            $types = 'si';
-
-            $result = $this->db->executeQuery($query, $params, $types);
-
-            if ($result) {
-                $alert = "<span class='success'>Update Product Successfully</span>";
-                return $alert;
-            } else {
-                $alert = "<span class='error'>Update Product Failed</span>";
-                return $alert;
-            }
-        }
-    }
-
-
-    public function update_product_($data, $files, $id)
+    public function update_product($data, $files, $id)
     {
         // return var_dump($data);
         $productId = mysqli_real_escape_string($this->db->conn, $id);
@@ -148,7 +119,6 @@ class product
     }
 
 
-
     public function getproductbyId($id)
     {
         $query = "SELECT * FROM tbl_product WHERE productId=?";
@@ -158,12 +128,50 @@ class product
         return $result;
     }
 
+    public function getproductType($type)
+    {
+        $query = "SELECT * FROM tbl_product WHERE productType=?";
+        $params = array($type);
+        $types = 'i';
+        $result = $this->db->executeSelect($query, $params, $types);
+        return $result;
+    }
+
+    public function getNewProduct()
+    {
+        $query = "SELECT * FROM tbl_product ORDER BY productId DESC LIMIT 4";
+        $result = $this->db->executeSelect($query, array());
+        return $result;
+    }
+
     public function delete_product($id)
     {
         $query = "DELETE FROM tbl_product WHERE productId=?";
         $params = array($id);
         $types = 'i';
         $result = $this->db->executeQuery($query, $params, $types);
+        return $result;
+    }
+
+    public function getProductDetails($id)
+    {
+        $query = "SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName 
+                  FROM tbl_product 
+                  INNER JOIN tbl_category ON tbl_product.productCategory = tbl_category.catId 
+                  INNER JOIN tbl_brand ON tbl_product.productBrand = tbl_brand.brandId
+                  WHERE tbl_product.productId = ?";
+        $params = array($id);
+        $type = "i";
+        $result = $this->db->executeSelect($query, $params, $type);
+        return $result;
+    }
+
+    public function showProductbyCatId($productCategory)
+    {
+        $query = "SELECT * FROM tbl_product WHERE productCategory = ? ORDER BY productId DESC";
+        $params = array($productCategory);
+        $types = 'i';
+        $result = $this->db->executeSelect($query, $params, $types);
         return $result;
     }
 }

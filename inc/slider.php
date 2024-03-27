@@ -1,4 +1,4 @@
-<div class="header_bottom">
+<!-- <div class="header_bottom">
     <div class="header_bottom_left">
         <div class="section group">
             <div class="listview_1_of_2 images_1_of_2">
@@ -46,10 +46,10 @@
         </div>
         <div class="clear"></div>
     </div>
-    <div class="header_bottom_right_images">
-        <!-- FlexSlider -->
+    <div class="header_bottom_right_images"> -->
 
-        <section class="slider">
+<!-- FlexSlider -->
+<!-- <section class="slider">
             <div class="flexslider">
                 <ul class="slides">
                     <li><img src="images/1.jpg" alt="" /></li>
@@ -58,8 +58,9 @@
                     <li><img src="images/4.jpg" alt="" /></li>
                 </ul>
             </div>
-        </section>
-        <!-- FlexSlider -->
-    </div>
+        </section> -->
+<!-- FlexSlider -->
+
+<!-- </div>
     <div class="clear"></div>
-</div>
+</div> -->

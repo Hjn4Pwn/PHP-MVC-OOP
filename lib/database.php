@@ -1,5 +1,5 @@
 <?php
-include_once "../config/config.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/web_php/shop/" . "config/config.php";
 ?>
  
 <?php
