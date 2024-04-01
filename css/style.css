@@ -191,18 +191,36 @@ input[type="number"] {
   border: 1px solid #c0bebe;
   border-radius: 3px;
   float: left;
-  height: 284px;
+  height: 350px;
   padding: 20px;
   width: 712px;
 }
-.register_account form input[type="text"],.register_account form select{
-	font-size:12px;
-	color:#B3B1B1;
-	padding:8px;
-	outline:none;
-	margin:5px 0;
-	width:340px;
+.register_account form input[type="text"],
+.register_account form input[type="password"],
+.register_account form input[type="tel"],
+.register_account form input[type="email"],
+.register_account form select {
+    font-size: 14px;
+    /* color: #B3B1B1; */
+	color: black;
+    padding: 8px;
+    outline: none;
+    margin: 5px 0;
+    width: 340px;
 }
+
+.error {
+    color: #be4741;
+}
+
+.success {
+    color: #3f7227;
+}
+
+.warning {
+    color: #6d7829;
+}
+
 .register_account form select{
 	width:360px;
 	color:#666;
@@ -235,8 +253,8 @@ input[type="number"] {
     -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
 }
 .login_panel input[type="text"],.login_panel input[type="password"]{
-	font-size:12px;
-	color:#B3B1B1;
+	font-size:14px;
+	color: black;
 	padding:8px;
 	outline:none;
 	margin:6px 0;

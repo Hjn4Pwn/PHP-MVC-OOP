@@ -17,12 +17,11 @@ class cart
         $this->product = new product();
     }
 
-    public function addToCart($cartProductId, $cartQuantity)
+    public function addToCart($cartProductId, $cartQuantity, $customerId)
     {
         $cartQuantity = $this->fm->validation($cartQuantity);
         $cartQuantity = mysqli_real_escape_string($this->db->conn, $cartQuantity);
         $cartProductId = mysqli_real_escape_string($this->db->conn, $cartProductId);
-        $sId = session_id();
 
         $getProduct = $this->product->getProductbyId($cartProductId);
         if ($getProduct) {
@@ -34,9 +33,9 @@ class cart
         $cartProductImage = $productDetails['productImage'];
 
         // check exist product in user's cart
-        $query = "SELECT * FROM tbl_cart WHERE sId = ? AND cartProductId=?";
-        $params = array($sId, $cartProductId);
-        $types = "si";
+        $query = "SELECT * FROM tbl_cart WHERE customerId = ? AND cartProductId=?";
+        $params = array($customerId, $cartProductId);
+        $types = "ii";
         $check = $this->db->executeSelect($query, $params, $types);
 
         if ($check) {
@@ -45,19 +44,19 @@ class cart
             $existQuantity = $checkResult['cartQuantity'];
             $updateQuantity = $existQuantity + $cartQuantity;
 
-            $query = "UPDATE tbl_cart SET cartQuantity=? WHERE sId = ? AND cartProductId=?";
-            $params = array($updateQuantity, $sId, $cartProductId);
-            $types = "isi";
+            $query = "UPDATE tbl_cart SET cartQuantity=? WHERE customerId = ? AND cartProductId=?";
+            $params = array($updateQuantity, $customerId, $cartProductId);
+            $types = "iii";
 
             $result = $this->db->executeQuery($query, $params, $types);
         }
         // 
         else {
 
-            $query = "INSERT INTO tbl_cart (cartProductId, sId, cartProductName, cartPrice, cartQuantity, cartProductImage) 
+            $query = "INSERT INTO tbl_cart (cartProductId, customerId, cartProductName, cartPrice, cartQuantity, cartProductImage) 
             VALUES (?, ?, ?, ?, ?, ?) ";
-            $params = array($cartProductId, $sId, $cartProductName, $cartPrice, $cartQuantity, $cartProductImage);
-            $types = 'issiis';
+            $params = array($cartProductId, $customerId, $cartProductName, $cartPrice, $cartQuantity, $cartProductImage);
+            $types = 'iisiis';
 
             $result = $this->db->executeQuery($query, $params, $types);
         }
@@ -68,12 +67,11 @@ class cart
             header('Location:notfound/404.html');
         }
     }
-    public function getProductCart()
+    public function getProductCart($customerId)
     {
-        $sId = session_id();
-        $query = "SELECT * FROM tbl_cart WHERE sId = ?";
-        $params = array($sId);
-        $types = "s";
+        $query = "SELECT * FROM tbl_cart WHERE customerId = ?";
+        $params = array($customerId);
+        $types = "i";
         $result = $this->db->executeSelect($query, $params, $types);
         return $result;
     }
@@ -96,5 +94,9 @@ class cart
         $types = 'i';
         $result = $this->db->executeQuery($query, $params, $types);
         return $result;
+    }
+
+    public function deleteAllSession()
+    {
     }
 }

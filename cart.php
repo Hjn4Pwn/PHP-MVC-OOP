@@ -4,6 +4,12 @@ include "./inc/header.php";
 ?>
 
 <?php
+if (!Session::get('customerLogin')) {
+	header('Location:login.php');
+}
+?>
+
+<?php
 if (isset($_GET['deleteCartId']) && $_GET['deleteCartId'] != NULL) {
 	$deleteCartId = $_GET['deleteCartId'];
 	$deleteCartId = $cart->deleteProductCart($deleteCartId);
@@ -34,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 						<th width="10%">Action</th>
 					</tr>
 					<?php
-					$getProductCart = $cart->getProductCart();
+					$getProductCart = $cart->getProductCart(Session::get('customerId'));
 					if ($getProductCart) {
 						$total = 0;
 						while ($res = $getProductCart->fetch_assoc()) {

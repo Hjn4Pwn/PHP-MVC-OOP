@@ -7,12 +7,14 @@ include "./inc/header.php";
 if (!isset($_GET['productId']) || $_GET['productId'] == NULL) {
 	echo "<script>window.location='./notfound/404.html';</script>";
 } else {
-	$id = $_GET['productId'];
+	$productId = $_GET['productId'];
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 	$quantity = $_POST['quantity'];
-	$addToCart = $cart->addToCart($id, $quantity);
+	$customerId = Session::get('customerId');
+	// var_dump($customerId);
+	$addToCart = $cart->addToCart($productId, $quantity, $customerId);
 }
 
 ?>
@@ -21,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 	<div class="content">
 		<div class="section group">
 			<?php
-			$getProductDetails = $product->getProductDetails($id);
+			$getProductDetails = $product->getProductDetails($productId);
 			if ($getProductDetails) {
 				while ($res = $getProductDetails->fetch_assoc()) {
 

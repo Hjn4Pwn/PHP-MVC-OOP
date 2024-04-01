@@ -1,7 +1,14 @@
 <?php
 include "./inc/header.php";
-include "./inc/slider.php";
+// include "./inc/slider.php";
 ?>
+
+<?php
+if (!Session::get('customerLogin')) {
+	header('Location:login.php');
+}
+?>
+
 <?php
 // echo session_id();
 ?>

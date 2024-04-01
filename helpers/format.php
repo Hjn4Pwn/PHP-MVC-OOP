@@ -30,6 +30,14 @@ class Format
         return $data;
     }
 
+    // public function validKeepSpecialChars($data)
+    // {
+    //     $data = trim($data);
+    //     $data = stripcslashes($data);
+    //     $data = htmlspecialchars($data);
+    //     return $data;
+    // }
+
     public function title()
     {
         $path = $_SERVER['SCRIPT_FILENAME'];

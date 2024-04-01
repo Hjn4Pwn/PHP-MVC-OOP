@@ -20,6 +20,10 @@ class product
     public function insert_product($data, $files)
     {
         // var_dump($data);
+
+        // $catName = $this->fm->validation($catName);
+        // $catId = $this->fm->validation($catId);
+
         $productName = mysqli_real_escape_string($this->db->conn, $data['productName']);
         $productCategory = mysqli_real_escape_string($this->db->conn, $data['productCategory']);
         $productBrand = mysqli_real_escape_string($this->db->conn, $data['productBrand']);
@@ -153,14 +157,14 @@ class product
         return $result;
     }
 
-    public function getProductDetails($id)
+    public function getProductDetails($productId)
     {
         $query = "SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName 
                   FROM tbl_product 
                   INNER JOIN tbl_category ON tbl_product.productCategory = tbl_category.catId 
                   INNER JOIN tbl_brand ON tbl_product.productBrand = tbl_brand.brandId
                   WHERE tbl_product.productId = ?";
-        $params = array($id);
+        $params = array($productId);
         $type = "i";
         $result = $this->db->executeSelect($query, $params, $type);
         return $result;

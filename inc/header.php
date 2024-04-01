@@ -21,6 +21,18 @@ $fm = new Format();
 $cat = new category();
 $brand = new brand();
 $product = new product();
+$customer = new customer()
+
+?>
+
+<?php
+
+if (isset($_GET['customerId'])) {
+    Session::destroy();
+}
+?>
+
+<?php
 
 ?>
 
@@ -74,7 +86,34 @@ $product = new product();
                         </a>
                     </div>
                 </div>
-                <div class="login"><a href="login.php">Login</a></div>
+                <div class="login"><a href="login.php">
+                        <?php
+                        if (Session::get('customerLogin')) {
+                            echo '<a href="?customerId=' . Session::get('customerId') . '">Logout</a>';
+                        } else {
+                            echo "<a href='login.php'>Login</a>";
+                        }
+                        ?>
+                    </a></div>
+                <div style="
+                    height: 36px;
+                    font-size: 16px;
+                    text-align: center;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    color: #a86ddd;
+                    font-weight: 600;
+                ">
+                    <?php
+                    if (Session::get('customerLogin')) {
+                        $res = $customer->getName(Session::get('customerId'))->fetch_assoc();
+                        echo $res['name'];
+                    } else {
+                        echo "";
+                    }
+                    ?>
+                </div>
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
