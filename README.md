@@ -1,5 +1,17 @@
-**Project này chủ yếu để củng cố kiến thức về OOP và hiểu sâu hơn về mô hình MVC**
+- **Project thực hiện với mục đích**:
+  - Củng cố kiến thức PHP, OOP, Mysql
+  - Hiểu hơn về mô hình MVC
+  - Hiểu hơn về 1 website e-commerce
+  - ...
+  
+- **Đã skip các chức năng**:
+  - Edit profile, user infomation
+  - Voting
+  - Online banking
+  - Comment
+  - Scan security bugs
+  - ...
 
-*Chỉ code BE*
+**Các chức năng còn thiếu sẽ được hoàn thành ở project Laravel**
 
 [*Get Front end code here*](shop_mvcoop.zip)
