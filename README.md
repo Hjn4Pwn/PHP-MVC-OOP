@@ -14,4 +14,8 @@
 
 **Các chức năng còn thiếu sẽ được hoàn thành ở project Laravel**
 
+- Database Structure:
+
+![Database Structure](dbStructure.png)
+
 [*Get Front end code here*](shop_mvcoop.zip)
