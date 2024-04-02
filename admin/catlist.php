@@ -36,7 +36,7 @@ if (isset($_GET['deleteCatId']) && $_GET['deleteCatId'] != NULL) {
 							<tr class="odd gradeX">
 								<td> <?php echo $i; ?> </td>
 								<td><?php echo $result['catName']; ?> </td>
-								<td><a href="catedit.php?catId=<?php echo $result['catId'] ?>">Edit</a> || <a onclick="confirmDelete(<?php echo $result['catId'] ?>)" href="#">Delete</a></td>
+								<td><a href="catedit.php?catId=<?php echo $result['catId']; ?>">Edit</a> || <a onclick="confirmDelete(<?php echo $result['catId']; ?>)" href="#">Delete</a></td>
 							</tr>
 					<?php
 						}

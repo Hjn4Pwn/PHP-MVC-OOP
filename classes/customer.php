@@ -23,6 +23,7 @@ class customer
         $password = $this->fm->validation($data['password']);
         $email = $this->fm->validation($data['email']);
         $phone = $this->fm->validation($data['phone']);
+        $address = $this->fm->validation($data['address']);
 
         // var_dump($data);
         $username = mysqli_real_escape_string($this->db->conn, $username);
@@ -30,9 +31,10 @@ class customer
         $password = mysqli_real_escape_string($this->db->conn, $password);
         $email = mysqli_real_escape_string($this->db->conn, $email);
         $phone = mysqli_real_escape_string($this->db->conn, $phone);
+        $address = mysqli_real_escape_string($this->db->conn, $address);
 
 
-        if (empty($username) || empty($name) || empty($password) || empty($email) || empty($phone)) {
+        if (empty($username) || empty($name) || empty($password) || empty($email) || empty($phone) || empty($address)) {
             $alert = "<span class='error'>Fields must be not empty</span>";
             return $alert;
         } else {
@@ -59,6 +61,12 @@ class customer
                 return $alert;
             }
 
+            $patternAddressCheck = '/^[a-zA-Z0-9]{2,20}$/';
+            if (!preg_match($patternAddressCheck, $address)) {
+                $alert = "<span class='error'>Invalid address</span>";
+                return $alert;
+            }
+
             $patternEmailCheck = '/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/';
             if (!preg_match($patternEmailCheck, $email)) {
                 $alert = "<span class='error'>Email is not valid</span>";
@@ -75,10 +83,10 @@ class customer
             $password = hash('sha256', $password);
 
             // về sau sẽ update lên PDO
-            $query = "INSERT INTO tbl_customer (name, username, password, email, phone) 
-                        VALUES (?, ?, ?, ?, ?) ";
-            $params = array($name, $username, $password, $email, $phone);
-            $types = 'sssss';
+            $query = "INSERT INTO tbl_customer (name, username, password, email, phone, address) 
+                        VALUES (?, ?, ?, ?, ?, ?) ";
+            $params = array($name, $username, $password, $email, $phone, $address);
+            $types = 'ssssss';
 
             try {
                 $result = $this->db->executeQuery($query, $params, $types);
@@ -148,9 +156,9 @@ class customer
         }
     }
 
-    public function getName($customerId)
+    public function getCustomerInfo($customerId)
     {
-        $query = "SELECT name FROM tbl_customer WHERE id = ?";
+        $query = "SELECT * FROM tbl_customer WHERE id = ?";
         $params = array($customerId);
         $types = "i";
         $result = $this->db->executeSelect($query, $params, $types);

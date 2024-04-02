@@ -63,10 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['login'])) {
 			</div>
 			<form action="" method="post">
 				<div class="">
-					<input type="text" name="username" placeholder="Enter your username">
+					<input type="text" name="name" placeholder="Enter your name">
 				</div>
 				<div class="">
-					<input type="text" name="name" placeholder="Enter your name">
+					<input type="text" name="username" placeholder="Enter your username">
+				</div>
+				<div>
+					<input type="password" name="password" placeholder="Enter your password">
 				</div>
 				<div>
 					<input type="email" name="email" placeholder="Enter your email">
@@ -75,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['login'])) {
 					<input type="tel" name="phone" placeholder="Enter your phone number">
 				</div>
 				<div>
-					<input type="password" name="password" placeholder="Enter your password">
+					<input type="text" name="address" placeholder="Enter your address">
 				</div>
 				<div class="search">
 					<input style="position: relative; right: -446px;

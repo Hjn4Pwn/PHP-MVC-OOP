@@ -107,7 +107,7 @@ if (isset($_GET['customerId'])) {
                 ">
                     <?php
                     if (Session::get('customerLogin')) {
-                        $res = $customer->getName(Session::get('customerId'))->fetch_assoc();
+                        $res = $customer->getCustomerInfo(Session::get('customerId'))->fetch_assoc();
                         echo $res['name'];
                     } else {
                         echo "";
@@ -124,6 +124,7 @@ if (isset($_GET['customerId'])) {
                 <li><a href="products.php">Products</a> </li>
                 <li><a href="topbrands.php">Top Brands</a></li>
                 <li><a href="cart.php">Cart</a></li>
+                <li><a href="oderDetails.php">Order Details</a></li>
                 <li><a href="contact.php">Contact</a> </li>
                 <div class="clear"></div>
             </ul>

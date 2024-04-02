@@ -96,7 +96,85 @@ class cart
         return $result;
     }
 
-    public function deleteAllSession()
+    public function insertOrder($customerId)
     {
+        $getProductCart = $this->getProductCart($customerId);
+        while ($getProduct = $getProductCart->fetch_assoc()) {
+            $productId = $getProduct['cartProductId'];
+            $quantity = $getProduct['cartQuantity'];
+            $price = $getProduct['cartQuantity'] * $getProduct['cartPrice'];
+
+            $query = "INSERT INTO tbl_order (productId, customerId, quantity, price) 
+            VALUES (?, ?, ?, ?) ";
+            $params = array($productId, $customerId, $quantity, $price);
+            $types = 'iiii';
+
+            $this->db->executeQuery($query, $params, $types);
+        }
+    }
+    public function deleteCart($customerId)
+    {
+        $query = "DELETE FROM tbl_cart WHERE customerId=?";
+        $params = array($customerId);
+        $types = 'i';
+        $result = $this->db->executeQuery($query, $params, $types);
+        return $result;
+    }
+
+    public function checkEmpty($customerId)
+    {
+        $query = "SELECT * FROM tbl_cart WHERE customerId = ?";
+        $params = array($customerId);
+        $types = "i";
+        $result = $this->db->executeSelect($query, $params, $types);
+
+        return $result;
+    }
+
+
+    public function getOrderDetails($customerId)
+    {
+        $query = "SELECT * FROM tbl_order WHERE customerId = ?";
+        $params = array($customerId);
+        $types = 'i';
+        $result = $this->db->executeSelect($query, $params, $types);
+        return $result;
+    }
+
+    public function getCustomerName()
+    {
+        $query = "SELECT DISTINCT tbl_customer.name AS customerName, tbl_order.customerId
+                  FROM tbl_order 
+                  INNER JOIN tbl_customer ON tbl_order.customerId = tbl_customer.id";
+
+        $result = $this->db->executeSelect($query, array(), "");
+        return $result;
+    }
+
+    public function updateOrderStatus($customerId)
+    {
+        $query = "UPDATE tbl_order SET status=? WHERE customerId=?";
+        $params = array(1, $customerId);
+        $types = "ii";
+        $result = $this->db->executeQuery($query, $params, $types);
+        return $result;
+    }
+
+    public function checkOrderStatus($customerId)
+    {
+        $query = "SELECT * FROM tbl_order WHERE status = 1 AND customerId=?";
+        $params = array($customerId);
+        $types = "i";
+        $result = $this->db->executeSelect($query, $params, $types);
+        return $result;
+    }
+
+    public function deleteCustomerOrder($customerId)
+    {
+        $query = "DELETE FROM tbl_order WHERE customerId=?";
+        $params = array($customerId);
+        $types = 'i';
+        $result = $this->db->executeQuery($query, $params, $types);
+        return $result;
     }
 }

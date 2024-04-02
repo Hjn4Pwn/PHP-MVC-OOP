@@ -88,11 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 					<tr>
 						<th>VAT : </th>
 						<!-- 0.05% -->
-						<td><?php echo ($getProductCart) ? $total * 0.005 . " VND" : "0 VND"; ?></td>
+						<td><?php echo "0.05%"; ?></td>
 					</tr>
 					<tr>
 						<th>Grand Total :</th>
-						<td><?php echo ($getProductCart) ? $total * 1.005 . " VND" : "0 VND"; ?></td>
+						<td><?php echo ($getProductCart) ? $total * 1.0005 . " VND" : "0 VND"; ?></td>
 					</tr>
 				</table>
 			</div>
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 					<a href="index.php"> <img src="images/shop.png" alt="" /></a>
 				</div>
 				<div class="shopright">
-					<a href="login.php"> <img src="images/check.png" alt="" /></a>
+					<a href="payment.php"> <img src="images/check.png" alt="" /></a>
 				</div>
 			</div>
 		</div>
